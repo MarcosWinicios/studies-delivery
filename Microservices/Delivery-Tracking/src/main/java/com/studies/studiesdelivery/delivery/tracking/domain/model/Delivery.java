@@ -55,7 +55,42 @@ public class Delivery {
         return  delivery;
     }
 
+    public UUID addItem(String name, int quantity){
+        Item item = Item.brandNew(name, quantity);
+        this.items.add(item);
+
+        this.calculateTotalItems();
+
+        return item.getId();
+    }
+
+    public void removeItem(UUID itemId){
+        this.items.removeIf(item -> item.getId().equals(itemId));
+        this.calculateTotalItems();
+    }
+
+    public void changeItemQuantity(UUID itemId, int quantity){
+        Item item = getItems().stream().filter(i -> i.getId().equals(itemId))
+                .findFirst().orElseThrow();
+
+        item.setQuantity(quantity);
+        calculateTotalItems();
+    }
+
+    public void removeItems(){
+        this.items.clear();
+        this.calculateTotalItems();
+    }
+
     public List<Item> getItems() {
         return Collections.unmodifiableList(this.items);
+    }
+
+    private void calculateTotalItems(){
+        int totalItems = getItems().stream().
+                mapToInt(Item::getQuantity)
+                .sum();
+
+        this.setTotalItems(totalItems);
     }
 }
