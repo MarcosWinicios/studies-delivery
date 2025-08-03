@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -101,7 +100,7 @@ public class Delivery {
 
     public void place (){
         verifyIfCanBePlaced();
-        
+
         this.setStatus(DeliveryStatus.WAITING_FOR_COURIER);
         this.setPlacedAt(OffsetDateTime.now());
     }
