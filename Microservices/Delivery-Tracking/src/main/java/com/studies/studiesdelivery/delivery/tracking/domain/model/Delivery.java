@@ -2,12 +2,15 @@ package com.studies.studiesdelivery.delivery.tracking.domain.model;
 
 import com.studies.studiesdelivery.delivery.tracking.domain.exception.DomainException;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -83,6 +86,19 @@ public class Delivery {
         this.calculateTotalItems();
     }
 
+    public void editPreparationDetails(PreparationDetails details){
+
+        verifyIfCanBeEdited();
+
+        this.setSender(details.getSender());
+        this.setRecipient(details.getRecipient());
+        this.setDistanceFee(details.getDistanceFee());
+        this.setCourierPayout(details.getCourierPayout());
+        this.setExpectedDeliveryAt(OffsetDateTime.now().plus(details.getExpectedDeliveryTime()));
+        this.setTotalCost(this.getDistanceFee().add(getCourierPayout()));
+
+    }
+
     public void place (){
         verifyIfCanBePlaced();
         
@@ -127,5 +143,24 @@ public class Delivery {
         return this.getSender() != null
                 && this.getRecipient() != null
                 && this.totalCost != null;
+    }
+
+    private void verifyIfCanBeEdited() {
+        if(!getStatus().equals(DeliveryStatus.DRAFT)){
+            throw new DomainException();
+        }
+    }
+
+
+    @Getter
+    @AllArgsConstructor
+    @Builder
+    public static class PreparationDetails {
+        private ContactPoint sender;
+        private ContactPoint recipient;
+        private BigDecimal distanceFee;
+        private BigDecimal courierPayout;
+        private Duration expectedDeliveryTime;
+
     }
 }
