@@ -1,5 +1,6 @@
 package com.studies.studiesdelivery.delivery.tracking.domain.model;
 
+import com.studies.studiesdelivery.delivery.tracking.domain.exception.DomainException;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -82,6 +83,24 @@ public class Delivery {
         this.calculateTotalItems();
     }
 
+    public void place (){
+        verifyIfCanBePlaced();
+        
+        this.setStatus(DeliveryStatus.WAITING_FOR_COURIER);
+        this.setPlacedAt(OffsetDateTime.now());
+    }
+
+    public void pickUp(UUID courierId){
+        this.setCourierId(courierId);
+        this.setStatus(DeliveryStatus.IN_TRANSIT);
+        this.setAssignedAt(OffsetDateTime.now());
+    }
+    public void markAsDelivered(){
+        this.setStatus(DeliveryStatus.DELIVERED);
+        this.setFulfilledAt(OffsetDateTime.now());
+    }
+
+
     public List<Item> getItems() {
         return Collections.unmodifiableList(this.items);
     }
@@ -92,5 +111,21 @@ public class Delivery {
                 .sum();
 
         this.setTotalItems(totalItems);
+    }
+
+    private void verifyIfCanBePlaced() {
+        if(!isFilled()){
+            throw new DomainException();
+        }
+
+        if(!getStatus().equals(DeliveryStatus.DRAFT)){
+            throw new DomainException();
+        }
+    }
+
+    private boolean isFilled() {
+        return this.getSender() != null
+                && this.getRecipient() != null
+                && this.totalCost != null;
     }
 }
