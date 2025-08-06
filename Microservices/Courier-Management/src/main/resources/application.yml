@@ -6,6 +6,6 @@ spring:
             ddl-auto: update
         show-sql: false
     datasource:
-        url: jdbc:postgresql://localhost:5432/courierdb
+        url: jdbc:postgresql://localhost:5435/courierdb
         username: postgres
         password: postgres
