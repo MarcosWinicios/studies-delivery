@@ -3,9 +3,9 @@ spring:
         name: delivery-tracking
     jpa:
         hibernate:
-            ddl-auto: update
-        show-sql: false
+            ddl-auto: create-drop
+        show-sql: true
     datasource:
-        url: jdbc:postgresql://localhost:5435/deliverydb
+        url: jdbc:postgresql://localhost:5435/deliverydb_test
         username: postgres
         password: postgres
