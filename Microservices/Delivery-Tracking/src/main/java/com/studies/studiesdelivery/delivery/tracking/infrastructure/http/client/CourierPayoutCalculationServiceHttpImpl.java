@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class CourierPayoutCalculationServiceHttpImpl implements CourierPayoutCalculationService {
 
-    private final CourierApiClient courierApiClient;
+    private final CourierApiClient courierApiClient; //O Spring injeta um proxy
 
     @Override
     public BigDecimal calculatePayout(Double distanceInKm) {
