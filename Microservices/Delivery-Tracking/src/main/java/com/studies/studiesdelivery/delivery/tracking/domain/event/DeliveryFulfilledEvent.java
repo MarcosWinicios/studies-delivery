@@ -11,7 +11,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @ToString
 public class DeliveryFulfilledEvent {
-    private final OffsetDateTime ocurredAt;
-    private final UUID deliveyId;
-
+    private final OffsetDateTime occurredAt;
+    private final UUID deliveryId;
 }

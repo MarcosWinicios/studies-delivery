@@ -23,7 +23,7 @@ public class DeliveryDomainEventHandler {
 
         this.integrationEventPublisher.publish(
                 event,
-                event.getDeliveyId().toString(),
+                event.getDeliveryId().toString(),
                 deliveryEventsTopicName
         );
     }
@@ -34,7 +34,7 @@ public class DeliveryDomainEventHandler {
 
         this.integrationEventPublisher.publish(
                 event,
-                event.getDeliveyId().toString(),
+                event.getDeliveryId().toString(),
                 deliveryEventsTopicName
         );
     }
@@ -45,7 +45,7 @@ public class DeliveryDomainEventHandler {
 
         this.integrationEventPublisher.publish(
                 event,
-                event.getDeliveyId().toString(),
+                event.getDeliveryId().toString(),
                 deliveryEventsTopicName
         );
     }
