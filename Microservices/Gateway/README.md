@@ -96,3 +96,4 @@ O projeto aplica **Resilience4j** integrado ao **Spring Cloud Gateway** para gar
 - [Voltar ao README principal](../../README.md)
 - [Delivery Tracking - README](../Delivery-Tracking/README.md)
 - [Courier Management - README](../Courier-Management/README.md)
+- [Service Registry - README](../Service-Registry/README.md)

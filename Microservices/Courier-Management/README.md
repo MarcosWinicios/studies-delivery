@@ -112,9 +112,9 @@ Ele faz parte do ecossistema de microsserviços do sistema de entregas, operando
     - **Mockito** — Simulação de dependências externas quando necessário.
 - Os testes se concentram no **comportamento do domínio**, reforçando a confiabilidade da lógica central.
 
-
-    
 ---
 ## Links Relacionados
 - [Voltar ao README principal](../../README.md)
-- [Delivery Tracking -  README](../Delivery-Tracking/README.md)
+- [Delivery Tracking - README](../Delivery-Tracking/README.md)
+- [Service Registry - README](../Service-Registry/README.md)
+- [Gateway - README](../Gateway/README.md)

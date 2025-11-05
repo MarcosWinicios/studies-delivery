@@ -27,8 +27,8 @@ Toda a comunicação HTTP entre microsserviços é feita de forma resiliente, co
 ![Mockito](https://img.shields.io/badge/Mockito-Testing-lightgrey?logo=java)
 
 
-| Tecnologia | Descrição | Link Oficial |
-|-------------|------------|---------------|
+| Tecnologia | Descrição | Link |
+|-------------|------------|--------------|
 | **Java 21** | Linguagem principal utilizada para o desenvolvimento do serviço. | [openjdk.org/projects/jdk/21](https://openjdk.org/projects/jdk/21/) |
 | **Spring Boot 3.x** | Framework base que simplifica a configuração e execução do projeto. | [spring.io/projects/spring-boot](https://spring.io/projects/spring-boot) |
 | **Spring Data JPA** | Abstração de persistência que simplifica o acesso ao banco de dados. | [spring.io/projects/spring-data-jpa](https://spring.io/projects/spring-data-jpa) |
@@ -166,5 +166,7 @@ O módulo segue princípios de **Domain-Driven Design (DDD)**, separa responsabi
 ---
 ## Links Relacionados
 - [Voltar ao README principal](../../README.md)
-- [Courier Management README](../courier-management/README.md)
+- [Courier Management - README](../Courier-Management/README.md)
+- [Service Registry - README](../Service-Registry/README.md)
+- [Gateway - README](../Gateway/README.md)
 
