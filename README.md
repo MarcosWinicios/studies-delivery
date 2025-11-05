@@ -1,7 +1,19 @@
-# 📦 Delivery System - Microservices Architecture
+# 🚚 Delivery System — Microservices Architecture
 
-Este projeto faz parte de uma arquitetura de microserviços desenvolvida durante a **Imersão Microserviços - Algaworks**.  
-O sistema simula o fluxo completo de entregas, desde o gerenciamento de entregadores até o rastreamento das entregas em andamento.
+Arquitetura de microserviços desenvolvida durante a **Imersão Microserviços - Algaworks**, simulando o fluxo completo de entregas: desde o gerenciamento de entregadores até o rastreamento de entregas em tempo real.
+
+> Sistema baseado em **Spring Cloud + Eureka + Kafka**, com cada serviço isolado e seu próprio banco de dados.
+
+---
+
+## 📘 Sumário
+- [Visão Geral](#-visão-geral)
+- [Estrutura do Projeto](#-estrutura-do-projeto)
+- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Arquitetura e Comunicação](#-arquitetura-e-comunicação)
+- [Especificações dos Microserviços](#-especificações-dos-microserviços)
+- [Como Executar o Projeto Localmente](#-como-executar-o-projeto-localmente)
+- [Autor](#-autor)
 
 ---
 
@@ -10,70 +22,81 @@ O sistema simula o fluxo completo de entregas, desde o gerenciamento de entregad
 O sistema é composto por múltiplos microserviços independentes que se comunicam entre si via **HTTP balanceado com Eureka** (Service Discovery), utilizando o ecossistema **Spring Cloud**.  
 O **Service Registry (Eureka)** atua como ponto central de descoberta, permitindo que os serviços se encontrem dinamicamente sem dependência de endereços fixos.
 
----
 
 ## 🧱 Estrutura do Projeto
 
-Os principais módulos são:
+| Diretório | Descrição | Porta Padrão |
+|-----------|------------|--------------|
+| **service-registry** | Registro de serviços (**Eureka Server**) | `8761` |
+| **gateway** | API Gateway (roteamento via `lb://`) | `9999` |
+| **delivery-tracking** | Serviço de entregas (publica eventos Kafka, expõe APIs REST) | `8081` |
+| **courier-management** | Serviço de couriers (consome eventos Kafka, expõe APIs REST) | `8082` |
+| **docker-compose.yml** | Infraestrutura local (Kafka, Kafka UI, PostgreSQL) | — |
 
-- **service-registry** – Eureka Server (porta `8761`) — *fora do Docker* no seu ambiente atual.
-- **gateway** – API Gateway (porta `9999`) — roteamento via Eureka (`lb://...`).
-- **delivery-tracking** – Serviço de entregas (publica eventos Kafka e expõe endpoints REST).
-- **courier-management** – Serviço de couriers (consome eventos Kafka e expõe endpoints REST).
-- **kafka + kafka-ui** – Broker e UI em containers (conforme `docker-compose`).
-- **postgres** – container PostgreSQL (host-mapped `5435:5432` conforme `docker-compose`).
-
-Cada serviço tem seu próprio banco/namespace (princípio *database per service*).
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
+
+![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.6-6DB33F?logo=springboot&logoColor=white)
+![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-2025.0.0-6DB33F?logo=spring&logoColor=white)
+![Spring Kafka](https://img.shields.io/badge/Kafka-Event_Driven-black?logo=apachekafka)
+![Eureka](https://img.shields.io/badge/Eureka%20Server-Service%20Registry-6DB33F?logo=spring&logoColor=white)
+![Kafka](https://img.shields.io/badge/Apache%20Kafka-3.x-231F20?logo=apachekafka&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Container-blue?logo=docker&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-Build%20Tool-C71A36?logo=apachemaven&logoColor=white)
+![JUnit](https://img.shields.io/badge/JUnit-5-orange?logo=junit5)
+
 | Tecnologia | Descrição | Link Oficial |
-|-----------:|:----------|:-------------|
-| Java 21 | Linguagem principal da aplicação | https://www.oracle.com/java/ |
-| Spring Boot | Framework para construção dos microserviços | https://spring.io/projects/spring-boot |
-| Spring Cloud | Ferramentas para microsserviços (Eureka, Gateway, LoadBalancer) | https://spring.io/projects/spring-cloud |
-| Spring Cloud Netflix Eureka | Registro e descoberta de serviços | https://cloud.spring.io/spring-cloud-netflix/reference/html/ |
-| Spring Cloud Gateway | API Gateway para roteamento e filtros | https://spring.io/projects/spring-cloud-gateway |
-| Spring Kafka | Integração com Apache Kafka | https://spring.io/projects/spring-kafka |
-| Apache Kafka | Broker de mensageria assíncrona | https://kafka.apache.org/ |
-| PostgreSQL | Banco relacional usado por cada serviço | https://www.postgresql.org/ |
-| Docker / Docker Compose | Containerização e orquestração local | https://www.docker.com/ / https://docs.docker.com/compose/ |
-| Maven | Gerenciamento de dependências e build | https://maven.apache.org/ |
-| Lombok | Redução de boilerplate | https://projectlombok.org/ |
-| Resilience4j | Circuit breaker / retry | https://resilience4j.readme.io/ |
+|:-----------|:-----------|:--------------|
+| **Java 21** | Linguagem base do projeto. | [oracle.com/java](https://www.oracle.com/java/) |
+| **Spring Boot 3.5.6** | Framework principal para os microserviços. | [spring.io/projects/spring-boot](https://spring.io/projects/spring-boot) |
+| **Spring Cloud 2025.0.0** | Suite de ferramentas para microsserviços. | [spring.io/projects/spring-cloud](https://spring.io/projects/spring-cloud) |
+| **Netflix Eureka Server** | Registro e descoberta de serviços. | [spring-cloud-netflix](https://cloud.spring.io/spring-cloud-netflix/reference/html/) |
+| **Spring Cloud Gateway** | API Gateway para roteamento e filtros. | [spring-cloud-gateway](https://spring.io/projects/spring-cloud-gateway) |
+| **Spring Kafka** | Integração com Apache Kafka para comunicação assíncrona e eventos. | [spring.io/projects/spring-kafka](https://spring.io/projects/spring-kafka) |
+| **Apache Kafka / Spring Kafka** | Mensageria assíncrona entre serviços. | [kafka.apache.org](https://kafka.apache.org/) / [spring-kafka](https://spring.io/projects/spring-kafka) |
+| **PostgreSQL** | Banco de dados relacional individual por serviço. | [postgresql.org](https://www.postgresql.org/) |
+| **Docker / Compose** | Containerização e orquestração local. | [docker.com](https://www.docker.com/) |
+| **Maven** | Gerenciador de build e dependências. | [maven.apache.org](https://maven.apache.org/) |
+| **Lombok** | Reduz boilerplate de código Java. | [projectlombok.org](https://projectlombok.org/) |
+| **Resilience4j** | Implementa circuit breaker e retry. | [resilience4j.readme.io](https://resilience4j.readme.io/) |
+| **JUnit 5** | Framework de testes unitários e de integração. | [junit.org/junit5](https://junit.org/junit5/) |
 
 ---
 
 ## 🧩 Arquitetura e Comunicação
 
-**Padrões principais:**
+**Principais Padrões:**
 
 - **HTTP via Gateway:**  
-  Cliente externo → **API Gateway** (`http://localhost:9999`) → roteamento para serviços via `lb://service-id` (Gateway consulta o Eureka para obter endereços).
+  Cliente externo → **API Gateway** (`http://localhost:9999`) → roteamento dinâmico via `lb://service-id`.
 
 - **HTTP interno entre serviços:**  
-  Serviços (ex.: `delivery-tracking`) usam `@LoadBalanced` (RestClient / RestTemplate / WebClient builder) para resolver `http://courier-management/...` — o cliente consulta o Eureka (ou usa cache local atualizado) e faz a chamada **direta** para a instância escolhida. **O tráfego não passa pelo Eureka**; o Eureka fornece apenas os endereços.
+  Os serviços utilizam o `@LoadBalanced` (RestClient / RestTemplate / WebClient) para resolver nomes lógicos de serviços no Eureka e comunicar-se diretamente — **o tráfego não passa pelo Eureka**.
 
-- **Mensageria (Kafka):**  
-  `delivery-tracking` publica eventos no tópico `deliveries.v1.events`.  
-  `courier-management` consome esse tópico via `@KafkaListener`.  
-  O broker Kafka e o Kafka UI estão no `docker-compose`.
+- **Mensageria (Kafka):**
+  - `delivery-tracking` publica eventos no tópico `deliveries.v1.events`.
+  - `courier-management` consome esses eventos via `@KafkaListener`.
+  - Broker e interface (`Kafka UI`) estão definidos no `docker-compose`.
 
 - **Persistência:**  
-  Cada serviço utiliza PostgreSQL via JDBC (cada um com seu schema/DB).
+  Cada microserviço possui seu **banco PostgreSQL próprio**, aplicando o princípio *database per service*.
 
-
- **Diagrama da Arquitetura:**
-
+**🗺️ Diagrama da Arquitetura:**
 ![Arquitetura](Docs/architecture.png)
+
 
 ---
 ## 📁 Especificações dos microserviços
 
 - [Courier Management Service - README](Microservices/Courier-Management/README.md)
 - [Delivery Tracking Service - README](Microservices/Delivery-Tracking/README.md)
+- [Gateway - README](Microservices/Gateway/README.md)
+- [Service Registry - README](Microservices/Service-Registry/README.md)
 
 ---
 
