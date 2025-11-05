@@ -70,12 +70,10 @@ Cada serviço tem seu próprio banco/namespace (princípio *database per service
 ![Arquitetura](Docs/architecture.png)
 
 ---
-## 📁 Outros Repositórios Relacionados
+## 📁 Especificações dos microserviços
 
-- [Courier Management Service - README](#)
-- [Delivery Tracking Service - README](#)
-
-*(substitua os links acima pelos repositórios reais dos outros microserviços)*
+- [Courier Management Service - README](Microservices/Courier-Management/README.md)
+- [Delivery Tracking Service - README](Microservices/Delivery-Tracking/README.md)
 
 ---
 
